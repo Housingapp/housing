@@ -47,6 +47,7 @@ public class HousingApp {
         hi.getToolbar().setUIID("Container");
         hi.getToolbar().hideToolbar();
         hi.setLayout(new BorderLayout());
+        hi.setScrollableY(true);
         
         Container c = new Container(); 
         c.setScrollableY(true);
@@ -70,6 +71,10 @@ public class HousingApp {
         
         Button resInfo = new ScaleImageButton(theme.getImage("Option 1.png"));
         resInfo.setUIID("BiggerButton");
+        resInfo.addActionListener((e) -> 
+        {
+        	showResInfo();
+        });
         c.addComponent(resInfo);
         
         Button dates = new ScaleImageButton(theme.getImage("Option 1.png"));
@@ -114,10 +119,51 @@ public class HousingApp {
     	Button mission = new ScaleImageButton(theme.getImage("Option 1.png"));
         mission.setUIID("BiggerButton");
         buttonArea1.addComponent(mission);
+        mission.addActionListener((e) -> 
+        {
+        	showMission();
+        });
+        
+        Button apply = new ScaleImageButton(theme.getImage("Option 1.png"));
+        mission.setUIID("BiggerButton");
+        buttonArea1.addComponent(apply);
+        apply.addActionListener((e) ->
+        {
+        	Display.getInstance().execute("https://offices.depaul.edu/housing/about/apply-for-housing/Pages/default.aspx");
+        });
         
         content.addComponent(buttonArea1);
     	
     	f.addComponent(BorderLayout.CENTER, content);
+    	f.show();
+    }
+    
+    public void showMission()
+    {
+    	Form f = new Form("Mission and Vision");
+    	f.setLayout(new BorderLayout());
+    	Container content = new Container();
+    	content.setScrollableY(true);
+    	
+    	Label picture1 = new ScaleImageLabel(theme.getImage("Table by UHall.jpg"));
+    	content.addComponent(picture1);
+    	
+    	Container textPane = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+    	// ourMission = new Title("Our Mission");
+    	
+    	
+    	
+    	f.addComponent(BorderLayout.CENTER, content);
+    	f.show();
+    }
+    
+    public void showResInfo()
+    {
+    	Form f = new Form("Resident Information");
+    	f.setLayout(new BorderLayout());
+    	
+    	System.out.println("Hi");
+    	
     	f.show();
     }
 

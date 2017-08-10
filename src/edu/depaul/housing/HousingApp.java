@@ -112,6 +112,7 @@ public class HousingApp {
     	TextArea aboutText = new TextArea("Life in a residence hall is an important aspect of a college education experience. Residence halls are more than just rooms or places to sleep. They are places where students develop meaningful friendships, explore new ideas and get involved with the university community. Living in campus housing provides the opportunity to learn to balance the academic and social aspects of life at DePaul University.\r\n" + 
     			"\r\n" + 
     			"Explore the links below to learn more about the Department of Housing Services");
+    	aboutText.setEditable(false);
     	TextBox1.addComponent(aboutText);
     	content.addComponent(TextBox1);
     	

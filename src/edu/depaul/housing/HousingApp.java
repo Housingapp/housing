@@ -10,6 +10,9 @@ import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
+
+import java.io.IOException;
+
 import com.codename1.components.ScaleImageButton;
 import com.codename1.components.ScaleImageLabel;
 //import com.codename1.io.Log;
@@ -77,9 +80,13 @@ public class HousingApp {
         });
         c.addComponent(resInfo);
         
-        Button dates = new ScaleImageButton(theme.getImage("Option 1.png"));
-        dates.setUIID("BiggerButton");
-        c.addComponent(dates);
+        Button services = new ScaleImageButton(theme.getImage("Option 1.png"));
+        services.setUIID("BiggerButton");
+        services.addActionListener((e) -> 
+        {
+        	showServicesAndInformation();
+        });
+        c.addComponent(services);
         
         Button dining = new ScaleImageButton(theme.getImage("Option 1.png"));
         dining.setUIID("BiggerButton");
@@ -162,11 +169,76 @@ public class HousingApp {
     {
     	Form f = new Form("Resident Information");
     	f.setLayout(new BorderLayout());
+    	Container content = new Container();
+    	content.setScrollableY(true);
     	
-    	System.out.println("Hi");
-    	
+    	Container buttonArea1 = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+    	Button campusBuildings = new ScaleImageButton(theme.getImage("Option 1.png"));
+        campusBuildings.setUIID("BiggerButton");
+        campusBuildings.addActionListener((e) -> 
+        {
+        	//showCampusBuildings();
+        });
+        buttonArea1.addComponent(campusBuildings);
+        
+        Button moveInDay = new ScaleImageButton(theme.getImage("Option 1.png"));
+        moveInDay.setUIID("BiggerButton");
+        moveInDay.addActionListener((e) -> 
+        {
+        	//showMoveInDay();
+        });
+        buttonArea1.addComponent(moveInDay);
+        
+        content.addComponent(buttonArea1);
+        
+        f.addComponent(BorderLayout.CENTER, content);
     	f.show();
     }
+    
+    public void showServicesAndInformation()
+    {
+    	Form f = new Form("Services and Information ");
+    	f.setLayout(new BorderLayout());
+    	Container content = new Container();
+    	content.setScrollableY(true);
+    	
+    	Container TextBox1 = new Container();
+    	TextBox1.setUIID("TextBox");
+    	
+    	String Title1 ="ACCESS ASSISTANCE (KEYS & LOCKS)";
+    	
+    	//Title1.underline();
+    	TextArea accessAssistance = new TextArea( Title1 + "\n" + "\n" +
+    			"If residents are having trouble with their room keys and/or ID card hall access, they should visit their area office during move-in hours for assistance. After-hours assistance is available by visiting the front desk of the building or area and the front desk receptionist can contact a facilities assistant to assist.\r\n" + 
+    			"\r\n" + 
+    			"For other ID, key and lock questions, refer to the Guide to Student Housing.");
+    	accessAssistance.setEditable(false);
+    	TextBox1.addComponent(accessAssistance);
+    	
+    	content.addComponent(TextBox1);
+    	
+    	f.addComponent(BorderLayout.CENTER, content);
+    	f.show();
+    	
+    }
+    
+   /* private String readFile(String file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader (file));
+        String         line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String         ls = System.getProperty("line.separator");
+
+        try {
+            while((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(ls);
+            }
+
+            return stringBuilder.toString();
+        } finally {
+            reader.close();
+        }
+    }*/
 
     public void stop() {
         current = Display.getInstance().getCurrent();

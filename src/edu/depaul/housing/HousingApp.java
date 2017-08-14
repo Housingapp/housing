@@ -11,6 +11,8 @@ import com.codename1.ui.TextArea;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 
+import java.util.Scanner;
+import java.io.File;
 import java.io.IOException;
 
 import com.codename1.components.ScaleImageButton;
@@ -185,7 +187,7 @@ public class HousingApp {
         moveInDay.setUIID("BiggerButton");
         moveInDay.addActionListener((e) -> 
         {
-        	//showMoveInDay();
+        	showMoveInDay();
         });
         buttonArea1.addComponent(moveInDay);
         
@@ -197,7 +199,7 @@ public class HousingApp {
     
     public void showServicesAndInformation()
     {
-    	Form f = new Form("Services and Information ");
+    	Form f = new Form("Services and Information");
     	f.setLayout(new BorderLayout());
     	Container content = new Container();
     	content.setScrollableY(true);
@@ -205,40 +207,113 @@ public class HousingApp {
     	Container TextBox1 = new Container();
     	TextBox1.setUIID("TextBox");
     	
-    	String Title1 ="ACCESS ASSISTANCE (KEYS & LOCKS)";
+    	String text;
     	
-    	//Title1.underline();
-    	TextArea accessAssistance = new TextArea( Title1 + "\n" + "\n" +
-    			"If residents are having trouble with their room keys and/or ID card hall access, they should visit their area office during move-in hours for assistance. After-hours assistance is available by visiting the front desk of the building or area and the front desk receptionist can contact a facilities assistant to assist.\r\n" + 
-    			"\r\n" + 
-    			"For other ID, key and lock questions, refer to the Guide to Student Housing.");
+    	try
+    	{
+    		text = readFile("C:/Users/jwolf16/eclipse-workspace/DePaul Housing App/src/edu/depaul/housing/ServicesAndInformation.txt");
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println(e);
+    		text = "Error loading this page. Please try again.";
+    	}
+    	
+    	TextArea accessAssistance = new TextArea(text);
     	accessAssistance.setEditable(false);
     	TextBox1.addComponent(accessAssistance);
     	
     	content.addComponent(TextBox1);
+    	
+    	Container buttonArea1 = new Container();
+    	
+    	Button workOrders = new ScaleImageButton(theme.getImage("Option 1.png"));
+        workOrders.setUIID("BiggerButton");
+        workOrders.addActionListener((e) -> 
+        {
+        	showWorkOrdersAndRepairs();
+        });
+        buttonArea1.addComponent(workOrders);
+        
+        Button moveInDay = new ScaleImageButton(theme.getImage("Option 1.png"));
+        moveInDay.setUIID("BiggerButton");
+        moveInDay.addActionListener((e) -> 
+        {
+        	showMoveInDay();
+        });
+        buttonArea1.addComponent(moveInDay);
+        
+        content.addComponent(buttonArea1);
     	
     	f.addComponent(BorderLayout.CENTER, content);
     	f.show();
     	
     }
     
-   /* private String readFile(String file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader (file));
-        String         line = null;
-        StringBuilder  stringBuilder = new StringBuilder();
-        String         ls = System.getProperty("line.separator");
-
-        try {
-            while((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-                stringBuilder.append(ls);
-            }
-
-            return stringBuilder.toString();
-        } finally {
-            reader.close();
-        }
-    }*/
+    public void showWorkOrdersAndRepairs()
+    {
+    	Form f = new Form("Work Orders and Repairs");
+    	f.setLayout(new BorderLayout());
+    	Container content = new Container();
+    	content.setScrollableY(true);
+    	
+    	Container TextBox1 = new Container();
+    	TextBox1.setUIID("TextBox");
+    	
+    	String text;
+    	
+    	try
+    	{
+    		text = readFile("C:/Users/jwolf16/eclipse-workspace/DePaul Housing App/src/edu/depaul/housing/WorkOrdersAndRepairs.txt");
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println(e);
+    		text = "Error loading this page. Please try again.";
+    	}
+    	
+    	TextArea workOrders = new TextArea(text);
+    	workOrders.setEditable(false);
+    	TextBox1.addComponent(workOrders);
+    	
+    	content.addComponent(TextBox1);
+    	
+    	f.addComponent(BorderLayout.CENTER, content);
+    	f.show();
+    }
+    
+    public void showMoveInDay()
+    {
+    	
+    	Form f = new Form("Move-In Day Asssistance");
+    	f.setLayout(new BorderLayout());
+    	Container content = new Container();
+    	content.setScrollableY(true);
+    	
+    	Container TextBox1 = new Container();
+    	TextBox1.setUIID("TextBox");
+    	
+    	String text;
+    	
+    	try
+    	{
+    		text = readFile("C:/Users/jwolf16/eclipse-workspace/DePaul Housing App/src/edu/depaul/housing/MoveInDayAssistance.txt");
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println(e);
+    		text = "Error loading this page. Please try again.";
+    	}
+    	
+    	TextArea MoveInDay = new TextArea(text);
+    	MoveInDay.setEditable(false);
+    	TextBox1.addComponent(MoveInDay);
+    	
+    	content.addComponent(TextBox1);
+    	
+    	f.addComponent(BorderLayout.CENTER, content);
+    	f.show();
+    }
 
     public void stop() {
         current = Display.getInstance().getCurrent();
@@ -248,6 +323,22 @@ public class HousingApp {
         }
     }
     
+    private String readFile(String pathname) throws IOException {
+
+        File file = new File(pathname);
+        StringBuilder fileContents = new StringBuilder((int)file.length());
+        Scanner scanner = new Scanner(file);
+        String lineSeparator = System.getProperty("line.separator");
+
+        try {
+            while(scanner.hasNextLine()) {
+                fileContents.append(scanner.nextLine() + lineSeparator);
+            }
+            return fileContents.toString();
+        } finally {
+            scanner.close();
+        }
+    }
     public void destroy() {
     }
 
